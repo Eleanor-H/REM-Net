@@ -127,7 +127,7 @@ if __name__ == '__main__':
 
             if not os.path.isdir(os.path.join(opt.data_dir, 'try_feats_roberta_large')):
                 os.mkdir(os.path.join(opt.data_dir, 'try_feats_roberta_large'))
-            save_name = os.path.join(opt.data_dir, 'try_feats_roberta_large', 'dev_ante_cons_feats.pt')
+            save_name = os.path.join(opt.data_dir, 'try_feats_roberta_large', 'dev_evid_feats.pt')
             torch.save(output, save_name)
 
         if opt.do_predict:
@@ -151,7 +151,7 @@ if __name__ == '__main__':
 
             if not os.path.isdir(os.path.join(opt.data_dir, 'try_feats_roberta_large')):
                 os.mkdir(os.path.join(opt.data_dir, 'try_feats_roberta_large'))
-            save_name = os.path.join(opt.data_dir, 'try_feats_roberta_large', 'test_ante_cons_feats.pt')
+            save_name = os.path.join(opt.data_dir, 'try_feats_roberta_large', 'test_evid_feats.pt')
             torch.save(output, save_name)
 
         if opt.do_train:
@@ -160,16 +160,16 @@ if __name__ == '__main__':
             elif opt.task_name == "cosmosqa":
                 loader = data_cosmosqa(opt, "train")
 
-            if not os.path.isdir(os.path.join(opt.data_dir, 'try_feats_roberta_large', 'train_ante_cons_feats')):
-                os.mkdir(os.path.join(opt.data_dir, 'try_feats_roberta_large', 'train_ante_cons_feats'))
+            if not os.path.isdir(os.path.join(opt.data_dir, 'try_feats_roberta_large', 'train_evid_feats')):
+                os.mkdir(os.path.join(opt.data_dir, 'try_feats_roberta_large', 'train_evid_feats'))
 
             i = 0
             for data in tqdm(loader, desc="saving train evids"):
                 i += 1
                 evidbert.eval()
                 qid, ante_feats, cons_feats = evidbert(data)
-                save_name = os.path.join(opt.data_dir, 'try_feats_roberta_large', 'train_ante_cons_feats',
-                                         '{}_ante_cons_feats.pt'.format(qid))
+                save_name = os.path.join(opt.data_dir, 'try_feats_roberta_large', 'train_evid_feats',
+                                         '{}_evid_feats.pt'.format(qid))
                 ante_feats = ante_feats.cpu().data.numpy()  # n_evid_sents x d_model
                 if cons_feats is not None:
                     cons_feats = cons_feats.cpu().data.numpy()  # n_evid_sents x d_model

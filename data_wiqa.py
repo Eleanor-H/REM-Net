@@ -58,9 +58,9 @@ class WIQAData(Dataset):
         self.evid_dir = evid_dir
         self.mode = mode
         if mode == Split.dev:
-            self.evids = torch.load(os.path.join(self.evid_dir, "dev_ante_cons_feats.pt"))
+            self.evids = torch.load(os.path.join(self.evid_dir, "dev_evid_feats.pt"))
         elif mode == Split.test:
-            self.evids = torch.load(os.path.join(self.evid_dir, "test_ante_cons_feats.pt"))
+            self.evids = torch.load(os.path.join(self.evid_dir, "test_evid_feats.pt"))
 
         processor = processors[task]()
 
@@ -116,12 +116,12 @@ class WIQAData(Dataset):
         if self.mode == Split.train:
             try:
                 evid = torch.load(os.path.join(self.evid_dir,
-                                               'train_ante_cons_feats',
-                                               '{}_ante_cons_feats.pt'.format(qid)
+                                               'train_evid_feats',
+                                               '{}_evid_feats.pt'.format(qid)
                                                ))
             except:
                 print('evid_dir: {} is not available'.format(
-                    os.path.join(self.evid_dir, 'train_ante_cons_feats', '{}_ante_cons_feats.pt'.format(qid))
+                    os.path.join(self.evid_dir, 'train_evid_feats', '{}_evid_feats.pt'.format(qid))
                 ))
                 assert 1 == 0
         else:
